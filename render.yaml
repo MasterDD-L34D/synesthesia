@@ -1,18 +1,23 @@
 # render.yaml — Fase 13 deploy config
 #
 # Per deployare su Render.com:
-#  1. Crea account su https://render.com (free tier)
+#  1. Crea account su https://render.com (free tier, niente carta di credito)
 #  2. Push questo repo su GitHub
 #  3. Su Render: New + → Blueprint → connetti il repo → Render legge questo file
-#  4. Compila il valore di SESSION_SECRET (oppure lascia che Render lo generi)
-#  5. Attendi il primo deploy (~2 minuti)
+#  4. Click Apply
+#  5. Attendi il primo deploy (~2-3 minuti)
 #
-# Render legge il file e crea:
-#  • 1 web service Node.js
-#  • 1 disk persistente da 1GB montato su /data (per il file SQLite)
+# NOTA SUL FREE TIER:
+# Render free tier NON supporta disk persistenti. Il file SQLite vive nel
+# filesystem del container e viene ricreato ad ogni redeploy / cold start.
+# Il seed in database/seeds.sql viene riapplicato automaticamente al primo
+# avvio se la tabella users è vuota (logica in config/db.js, Fase 13).
+# Per la demo d'esame questo è accettabile: i dati seed coprono tutto il
+# necessario, gli upload utente sono persi a ogni riavvio (comportamento
+# noto e documentato nelle note della relazione).
 #
-# Lo script `start` già legge process.env.PORT (iniettato da Render).
-# DB_PATH viene settato a /data/synesthesia.sqlite così il file sopravvive ai redeploy.
+# Per produzione seria servirebbe un piano pagato ($7/mese web + $1/mese
+# disk) oppure un database esterno managed (Turso, Neon, ecc).
 
 services:
   - type: web
@@ -27,10 +32,6 @@ services:
       - key: SESSION_SECRET
         generateValue: true
       - key: DB_PATH
-        value: /data/synesthesia.sqlite
-    disk:
-      name: synesthesia-data
-      mountPath: /data
-      sizeGB: 1
+        value: ./database/synesthesia.sqlite
     healthCheckPath: /
     autoDeploy: true
