@@ -416,11 +416,32 @@ Bootstrap grid + media query custom a `768px` che ridimensiona hero, disabilita 
 
 ---
 
+## 💬 Feedback tester
+
+Stai testando Synesthesia? Il tuo feedback è prezioso per decidere come far evolvere il progetto.
+
+**Due modi per rispondere**:
+
+1. **Google Form guidato** (consigliato — 7-10 min, checkbox + scale):
+   → **[COMPILA IL FORM](https://forms.gle/DA-INSERIRE-URL)** ← *URL da aggiornare dopo la creazione via `tools/create_feedback_form.gs`*
+
+2. **GitHub Issue** (per chi vive sul repo):
+   → [Apri nuova issue "💬 Feedback tester"](https://github.com/MasterDD-L34D/synesthesia/issues/new?template=feedback.md)
+
+**Bug report**:
+→ [Apri issue "🐛 Bug report"](https://github.com/MasterDD-L34D/synesthesia/issues/new?template=bug_report.md)
+
+Il form copre: profilo tester, esperienza di registrazione/onboarding, navigazione e ricerca, design e brand (palette, tipografia, logo prism mark, ruota del Prisma), contenuti e direzione futura. Struttura completa in [`docs/FEEDBACK_FORM.md`](docs/FEEDBACK_FORM.md).
+
+---
+
 ## Documentazione
 
 - [`docs/relazione.md`](docs/relazione.md) — relazione completa per l'esame (12 sezioni + 2 appendici)
 - [`docs/DEPLOY.md`](docs/DEPLOY.md) — guida deploy Render.com
 - [`docs/SCREENSHOT_GUIDE.md`](docs/SCREENSHOT_GUIDE.md) — procedura di cattura dei 12 screenshot richiesti dal report
+- [`docs/FEEDBACK_FORM.md`](docs/FEEDBACK_FORM.md) — struttura Google Form feedback tester (30 domande)
+- [`docs/FORM_ANSWERS.md`](docs/FORM_ANSWERS.md) — risposte pronte per il form d'esame
 
 ---
 
