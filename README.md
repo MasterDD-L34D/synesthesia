@@ -423,7 +423,7 @@ Stai testando Synesthesia? Il tuo feedback è prezioso per decidere come far evo
 **Due modi per rispondere**:
 
 1. **Google Form guidato** (consigliato — 7-10 min, checkbox + scale):
-   → **[COMPILA IL FORM](https://forms.gle/DA-INSERIRE-URL)** ← *URL da aggiornare dopo la creazione via `tools/create_feedback_form.gs`*
+   → **[COMPILA IL FORM](https://forms.gle/xP2V9Kb8QpjFTnrM6)**
 
 2. **GitHub Issue** (per chi vive sul repo):
    → [Apri nuova issue "💬 Feedback tester"](https://github.com/MasterDD-L34D/synesthesia/issues/new?template=feedback.md)
