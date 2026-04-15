@@ -4,7 +4,7 @@ Testo pronto da copia-incollare nel Google Form *Specifiche del progetto di esam
 
 **Studente**: matricola 20051606
 **Repository**: https://github.com/MasterDD-L34D/synesthesia
-**URL demo**: `<DA COMPILARE DOPO DEPLOY RENDER>` (tipicamente `https://synesthesia-xxx.onrender.com`)
+**URL demo**: https://synesthesia-btr1.onrender.com
 
 ---
 
@@ -177,7 +177,7 @@ Ogni query di ricerca da parte di un utente autenticato viene loggata in `intera
 6. **Componenti SVG riutilizzabili**: logo mark Prisma, Ruota del Prisma (partial EJS parametrico), badge sfaccettatura con icona
 
 **Repository**: https://github.com/MasterDD-L34D/synesthesia
-**Demo live**: `<INSERIRE URL RENDER DOPO DEPLOY>`
+**Demo live**: https://synesthesia-btr1.onrender.com
 
 **Credenziali demo** (tutte password `password`):
 
