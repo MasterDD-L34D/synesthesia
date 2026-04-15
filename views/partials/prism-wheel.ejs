@@ -1,0 +1,66 @@
+<%
+// views/partials/prism-wheel.ejs
+// Ruota del Prisma — 9 sfaccettature dell'identità interiore.
+// Parametri:
+//   activeType — intero 1..9 (sfaccettatura dominante)
+//   size       — px (default 120)
+const wheelSize = typeof size !== 'undefined' ? size : 120;
+const active = typeof activeType !== 'undefined' ? Number(activeType) : 0;
+const segments = [
+    { d: 'M 0 -55 A 55 55 0 0 1 35.35 -42.1 L 0 0 Z',     type: 1, color: 'hsl(20, 65%, 55%)' },
+    { d: 'M 35.35 -42.1 A 55 55 0 0 1 54.16 -9.55 L 0 0 Z', type: 2, color: 'hsl(340, 65%, 55%)' },
+    { d: 'M 54.16 -9.55 A 55 55 0 0 1 42.1 35.35 L 0 0 Z',  type: 3, color: 'hsl(45, 65%, 55%)' },
+    { d: 'M 42.1 35.35 A 55 55 0 0 1 9.55 54.16 L 0 0 Z',   type: 4, color: 'hsl(270, 65%, 55%)' },
+    { d: 'M 9.55 54.16 A 55 55 0 0 1 -27.5 47.63 L 0 0 Z',  type: 5, color: 'hsl(195, 65%, 50%)' },
+    { d: 'M -27.5 47.63 A 55 55 0 0 1 -51.68 -18.81 L 0 0 Z', type: 6, color: 'hsl(215, 65%, 55%)' },
+    { d: 'M -51.68 -18.81 A 55 55 0 0 1 -35.35 -42.1 L 0 0 Z', type: 7, color: 'hsl(25, 65%, 55%)' },
+    { d: 'M -35.35 -42.1 A 55 55 0 0 1 -9.55 -54.16 L 0 0 Z', type: 8, color: 'hsl(355, 65%, 55%)' },
+    { d: 'M -9.55 -54.16 A 55 55 0 0 1 0 -55 L 0 0 Z',      type: 9, color: 'hsl(140, 60%, 45%)' },
+];
+%>
+<svg
+    class="prism-wheel"
+    width="<%= wheelSize %>"
+    height="<%= wheelSize %>"
+    viewBox="0 0 120 120"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Ruota del Prisma — sfaccettatura dominante <%= active || 'non determinata' %>"
+>
+    <title>Prisma Interiore<% if (active) { %> — Sfaccettatura <%= active %><% } %></title>
+    <g transform="translate(60,60)">
+        <circle r="55" fill="none" stroke="rgba(26,22,37,0.12)" stroke-width="1"/>
+        <% segments.forEach((s) => { %>
+            <% const isActive = s.type === active; %>
+            <path
+                d="<%= s.d %>"
+                fill="<%= s.color %>"
+                opacity="<%= isActive ? 1 : 0.3 %>"
+                stroke="<%= isActive ? '#FAF7F2' : 'none' %>"
+                stroke-width="<%= isActive ? 2 : 0 %>"
+                stroke-linejoin="round"
+            />
+        <% }); %>
+        <circle r="18" fill="#FAF7F2" stroke="rgba(26,22,37,0.08)" stroke-width="1"/>
+        <% if (active) { %>
+            <text
+                x="0"
+                y="6"
+                font-family="'Fraunces', Georgia, serif"
+                font-size="20"
+                font-weight="700"
+                fill="#1A1625"
+                text-anchor="middle"
+            ><%= active %></text>
+        <% } else { %>
+            <text
+                x="0"
+                y="4"
+                font-family="'Fraunces', Georgia, serif"
+                font-size="10"
+                fill="#4A4458"
+                text-anchor="middle"
+            >?</text>
+        <% } %>
+    </g>
+</svg>

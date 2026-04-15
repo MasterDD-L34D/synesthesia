@@ -1,0 +1,8 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-label="Synesthesia prism mark">
+    <title>Synesthesia</title>
+    <g style="mix-blend-mode: multiply;">
+        <circle cx="17" cy="24" r="12" fill="#5B3FD9" fill-opacity="0.85"/>
+        <circle cx="24" cy="24" r="12" fill="#D946A8" fill-opacity="0.82"/>
+        <circle cx="31" cy="24" r="12" fill="#F0552B" fill-opacity="0.82"/>
+    </g>
+</svg>

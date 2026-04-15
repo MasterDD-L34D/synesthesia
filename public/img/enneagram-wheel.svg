@@ -1,0 +1,47 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ruota dell'Enneagramma">
+    <title>Enneagramma — 9 tipi</title>
+    <defs>
+        <!-- 9 segmenti, ognuno con un colore dedicato. L=55 S=65% calibrati. -->
+    </defs>
+    <g transform="translate(60,60)">
+        <!-- Outer ring -->
+        <circle r="55" fill="none" stroke="#1A1625" stroke-opacity="0.12" stroke-width="1"/>
+
+        <!-- 9 segmenti radiali. Ogni segmento è un arco. -->
+        <!-- Angolo per segmento = 40deg. Partenza da top (-90deg), senso orario. -->
+        <!-- Tipo 1 -->
+        <path d="M 0 -55 A 55 55 0 0 1 35.35 -42.1 L 0 0 Z" fill="hsl(20, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 2 -->
+        <path d="M 35.35 -42.1 A 55 55 0 0 1 54.16 -9.55 L 0 0 Z" fill="hsl(340, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 3 -->
+        <path d="M 54.16 -9.55 A 55 55 0 0 1 42.1 35.35 L 0 0 Z" fill="hsl(45, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 4 -->
+        <path d="M 42.1 35.35 A 55 55 0 0 1 9.55 54.16 L 0 0 Z" fill="hsl(270, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 5 -->
+        <path d="M 9.55 54.16 A 55 55 0 0 1 -27.5 47.63 L 0 0 Z" fill="hsl(195, 65%, 50%)" opacity="0.92"/>
+        <!-- Tipo 6 -->
+        <path d="M -27.5 47.63 A 55 55 0 0 1 -51.68 -18.81 L 0 0 Z" fill="hsl(215, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 7 -->
+        <path d="M -51.68 -18.81 A 55 55 0 0 1 -35.35 -42.1 L 0 0 Z" fill="hsl(25, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 8 -->
+        <path d="M -35.35 -42.1 A 55 55 0 0 1 -9.55 -54.16 L 0 0 Z" fill="hsl(355, 65%, 55%)" opacity="0.92"/>
+        <!-- Tipo 9 -->
+        <path d="M -9.55 -54.16 A 55 55 0 0 1 0 -55 L 0 0 Z" fill="hsl(140, 60%, 45%)" opacity="0.92"/>
+
+        <!-- Bordo centrale bianco per respiro -->
+        <circle r="14" fill="#FAF7F2"/>
+
+        <!-- Numeri 1..9 -->
+        <g font-family="'Fraunces', Georgia, serif" font-size="10" font-weight="600" fill="#FAF7F2" text-anchor="middle">
+            <text x="18" y="-34">1</text>
+            <text x="40" y="-18">2</text>
+            <text x="42" y="12">3</text>
+            <text x="25" y="38">4</text>
+            <text x="-10" y="45">5</text>
+            <text x="-35" y="22">6</text>
+            <text x="-40" y="-12">7</text>
+            <text x="-22" y="-34">8</text>
+            <text x="-2" y="-40">9</text>
+        </g>
+    </g>
+</svg>

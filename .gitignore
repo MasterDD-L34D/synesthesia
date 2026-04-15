@@ -1,0 +1,14 @@
+node_modules/
+.env
+*.sqlite
+*.sqlite-journal
+public/uploads/images/*
+public/uploads/audio/*
+public/uploads/avatars/*
+!public/uploads/**/.gitkeep
+.extract_tmp.py
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

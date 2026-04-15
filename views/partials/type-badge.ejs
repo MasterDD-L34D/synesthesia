@@ -1,0 +1,50 @@
+<%
+// views/partials/type-badge.ejs
+//
+// Badge visivo per una Sfaccettatura del Prisma Interiore (1..9).
+// Rende icona + numero + label opzionale con colore della sfaccettatura.
+//
+// Parametri:
+//   type       — intero 1..9 (obbligatorio)
+//   size       — 'sm' | 'md' | 'lg' (default 'md')
+//   showLabel  — boolean (default false)
+//   showNumber — boolean (default true)
+//   variant    — 'filled' | 'outline' | 'ghost' (default 'filled')
+
+const typeNum = Number(type);
+const sizeClass = typeof size !== 'undefined' ? size : 'md';
+const variantClass = typeof variant !== 'undefined' ? variant : 'filled';
+const withLabel = typeof showLabel !== 'undefined' ? showLabel : false;
+const withNumber = typeof showNumber !== 'undefined' ? showNumber : true;
+
+// 9 archetipi del Prisma — rebrand lessicale da Enneagramma (concettualmente equivalenti).
+const facets = {
+    1: { icon: 'bi-square-fill',           name: 'Cesellatore', essence: 'ordine' },
+    2: { icon: 'bi-heart-fill',            name: 'Donatore',    essence: 'cura' },
+    3: { icon: 'bi-trophy-fill',           name: 'Faro',        essence: 'slancio' },
+    4: { icon: 'bi-droplet-fill',          name: 'Lirico',      essence: 'voce unica' },
+    5: { icon: 'bi-eye-fill',              name: 'Cartografo',  essence: 'osservazione' },
+    6: { icon: 'bi-shield-fill',           name: 'Custode',     essence: 'lealtà' },
+    7: { icon: 'bi-lightning-charge-fill', name: 'Viandante',   essence: 'meraviglia' },
+    8: { icon: 'bi-gem',                   name: 'Titano',      essence: 'forza' },
+    9: { icon: 'bi-yin-yang',              name: 'Orizzonte',   essence: 'quiete' },
+};
+
+const f = facets[typeNum];
+%>
+<% if (f) { %>
+    <span class="syn-type-badge syn-type-badge--<%= sizeClass %> syn-type-badge--<%= variantClass %> type-bg-<%= typeNum %>"
+          data-type="<%= typeNum %>"
+          title="Sfaccettatura <%= typeNum %> — <%= f.name %> (<%= f.essence %>)"
+          aria-label="Sfaccettatura <%= typeNum %>, <%= f.name %>">
+        <i class="bi <%= f.icon %>" aria-hidden="true"></i>
+        <% if (withNumber) { %><span class="syn-type-badge__num"><%= typeNum %></span><% } %>
+        <% if (withLabel) { %><span class="syn-type-badge__name"><%= f.name %></span><% } %>
+    </span>
+<% } else { %>
+    <span class="syn-type-badge syn-type-badge--<%= sizeClass %> syn-type-badge--unknown"
+          aria-label="Sfaccettatura non determinata">
+        <i class="bi bi-question-circle" aria-hidden="true"></i>
+        <% if (withLabel) { %><span class="syn-type-badge__name">Non determinata</span><% } %>
+    </span>
+<% } %>

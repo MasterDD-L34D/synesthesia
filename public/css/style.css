@@ -1,0 +1,1343 @@
+/* ============================================================================
+   Synesthesia — stylesheet principale
+   Direction: Ink + Prisma (brief design Fase 12b)
+   Palette: Ink #1A1625 + Bone #FAF7F2 + Iris #5B3FD9 + Ember #F0552B
+   Gradient firma (prism): solo hero text, progress bar, logo mark
+   Font: Fraunces (display, opsz variable) + Inter (body/UI)
+============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* =================== Tokens =================== */
+:root {
+    /* Base palette */
+    --syn-ink: #1A1625;
+    --syn-ink-soft: #4A4458;
+    --syn-bone: #FAF7F2;
+    --syn-bone-elevated: #FFFFFF;
+    --syn-border: rgba(26, 22, 37, 0.10);
+    --syn-border-strong: rgba(26, 22, 37, 0.16);
+
+    /* Accents */
+    --syn-iris: #5B3FD9;
+    --syn-iris-hover: #4A30C2;
+    --syn-iris-soft: rgba(91, 63, 217, 0.12);
+    --syn-magenta: #D946A8;
+    --syn-ember: #F0552B;
+    --syn-ember-hover: #D84320;
+
+    /* Semantic */
+    --syn-success: #0E9F6E;
+    --syn-warning: #D97706;
+    --syn-danger: #DC2626;
+    --syn-info: #0284C7;
+
+    /* Prism gradient — firma, uso parsimonioso */
+    --syn-prism: linear-gradient(135deg, #5B3FD9 0%, #D946A8 50%, #F0552B 100%);
+    --syn-prism-radial: radial-gradient(circle at 30% 50%, #5B3FD9, #D946A8 40%, #F0552B 80%);
+
+    /* 9 tipi enneagrammatici (HSL uniforme L=55 S=65%, verde ribassato) */
+    --syn-type-1: hsl(20, 65%, 55%);
+    --syn-type-2: hsl(340, 65%, 55%);
+    --syn-type-3: hsl(45, 65%, 55%);
+    --syn-type-4: hsl(270, 65%, 55%);
+    --syn-type-5: hsl(195, 65%, 50%);
+    --syn-type-6: hsl(215, 65%, 55%);
+    --syn-type-7: hsl(25, 65%, 55%);
+    --syn-type-8: hsl(355, 65%, 55%);
+    --syn-type-9: hsl(140, 60%, 45%);
+
+    /* Shadow system */
+    --syn-shadow-xs: 0 1px 2px rgba(26, 22, 37, 0.04);
+    --syn-shadow-sm: 0 2px 6px rgba(26, 22, 37, 0.06);
+    --syn-shadow-md: 0 8px 20px rgba(26, 22, 37, 0.08);
+    --syn-shadow-lg: 0 16px 40px rgba(91, 63, 217, 0.14);
+
+    /* Radii */
+    --syn-radius-xs: 6px;
+    --syn-radius-sm: 8px;
+    --syn-radius-md: 12px;
+    --syn-radius-lg: 16px;
+    --syn-radius-xl: 24px;
+    --syn-radius-full: 9999px;
+
+    /* Spacing scale 4px base */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+    --space-10: 128px;
+
+    /* Motion */
+    --syn-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --syn-transition: all 200ms var(--syn-ease);
+}
+
+/* =================== Reset & base =================== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--syn-bone);
+    color: var(--syn-ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'kern', 'liga', 'calt';
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* =================== Typography =================== */
+h1, h2, h3, h4, .display-4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 144;
+    color: var(--syn-ink);
+    letter-spacing: -0.022em;
+    line-height: 1.12;
+    margin: 0 0 var(--space-4) 0;
+    font-weight: 600;
+}
+
+h1, .display-4 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+}
+
+h2 {
+    font-size: clamp(1.625rem, 3vw, 2.25rem);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-variation-settings: 'opsz' 40;
+}
+
+p {
+    margin: 0 0 var(--space-4) 0;
+}
+
+.lead {
+    font-size: 1.125rem;
+    color: var(--syn-ink-soft);
+    font-weight: 400;
+    line-height: 1.55;
+}
+
+small, .small {
+    font-size: 0.875rem;
+    color: var(--syn-ink-soft);
+}
+
+a {
+    color: var(--syn-iris);
+    text-decoration: none;
+    transition: var(--syn-transition);
+}
+
+a:hover {
+    color: var(--syn-iris-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--syn-border);
+    margin: var(--space-6) 0;
+}
+
+/* Headline gradient — uso molto parsimonioso */
+.syn-headline-prism {
+    background: var(--syn-prism);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/* =================== Prism mark (logo inline) =================== */
+.syn-mark {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url('/img/prism-mark.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    margin-right: var(--space-2);
+}
+
+.syn-mark-lg {
+    width: 56px;
+    height: 56px;
+}
+
+/* =================== Navbar =================== */
+.navbar {
+    background: var(--syn-bone) !important;
+    border-bottom: 1px solid var(--syn-border);
+    padding: var(--space-3) 0;
+    box-shadow: var(--syn-shadow-xs);
+}
+
+.navbar-brand {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 40;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--syn-ink) !important;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand i {
+    display: none; /* sostituito da syn-mark */
+}
+
+.navbar-brand::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: var(--space-2);
+    background-image: url('/img/prism-mark.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 400ms var(--syn-ease);
+}
+
+.navbar-brand:hover::before {
+    transform: rotate(15deg) scale(1.05);
+}
+
+.navbar-nav .nav-link {
+    color: var(--syn-ink) !important;
+    font-weight: 500;
+    padding: var(--space-2) var(--space-3) !important;
+    position: relative;
+    margin: 0 var(--space-1);
+    transition: var(--syn-transition);
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: 2px;
+    height: 2px;
+    background: var(--syn-iris);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 220ms var(--syn-ease);
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--syn-iris) !important;
+}
+
+.navbar-nav .nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar-toggler {
+    border: 1px solid var(--syn-border-strong);
+    padding: var(--space-2);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%231A1625' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* =================== Hero =================== */
+.jumbotron, section.jumbotron {
+    background: var(--syn-bone) !important;
+    color: var(--syn-ink) !important;
+    padding: var(--space-10) var(--space-4) !important;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+    border-radius: 0;
+}
+
+/* Dot matrix motif — firma visiva al posto dello striping */
+.jumbotron::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--syn-ink) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.12;
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, black 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 90% 80% at center, black 30%, transparent 75%);
+    pointer-events: none;
+}
+
+.jumbotron > * {
+    position: relative;
+    z-index: 1;
+}
+
+.jumbotron h1,
+.jumbotron .display-4 {
+    font-size: clamp(2.5rem, 5.5vw, 4.75rem);
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-5);
+    background: var(--syn-prism);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.jumbotron .lead {
+    font-size: 1.25rem;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--syn-ink-soft);
+}
+
+/* =================== Buttons =================== */
+.btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--syn-radius-sm);
+    transition: var(--syn-transition);
+    border: 1.5px solid transparent;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(91, 63, 217, 0.35);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.btn-sm {
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.8125rem;
+    border-radius: var(--syn-radius-xs);
+}
+
+/* Primary — Iris */
+.btn-primary {
+    background: var(--syn-iris);
+    border-color: var(--syn-iris);
+    color: var(--syn-bone-elevated);
+}
+
+.btn-primary:hover {
+    background: var(--syn-iris-hover);
+    border-color: var(--syn-iris-hover);
+    color: var(--syn-bone-elevated);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(91, 63, 217, 0.35);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Accent — Ember, uso parsimonioso (CTA hero / live badge) */
+.btn-success {
+    background: var(--syn-ember);
+    border-color: var(--syn-ember);
+    color: var(--syn-bone-elevated);
+}
+
+.btn-success:hover {
+    background: var(--syn-ember-hover);
+    border-color: var(--syn-ember-hover);
+    color: var(--syn-bone-elevated);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(240, 85, 43, 0.35);
+}
+
+.btn-danger {
+    background: var(--syn-danger);
+    border-color: var(--syn-danger);
+    color: var(--syn-bone-elevated);
+}
+
+.btn-danger:hover {
+    background: #B91C1C;
+    border-color: #B91C1C;
+    color: var(--syn-bone-elevated);
+}
+
+.btn-secondary {
+    background: var(--syn-ink);
+    border-color: var(--syn-ink);
+    color: var(--syn-bone);
+}
+
+.btn-secondary:hover {
+    background: #2D2638;
+    color: var(--syn-bone);
+}
+
+/* Ghost variants */
+.btn-outline-primary {
+    background: transparent;
+    color: var(--syn-iris);
+    border-color: var(--syn-iris);
+}
+
+.btn-outline-primary:hover {
+    background: var(--syn-iris);
+    color: var(--syn-bone-elevated);
+    border-color: var(--syn-iris);
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+    background: transparent;
+    color: var(--syn-ink);
+    border-color: var(--syn-border-strong);
+}
+
+.btn-outline-secondary:hover {
+    background: rgba(26, 22, 37, 0.06);
+    color: var(--syn-ink);
+    border-color: var(--syn-ink);
+}
+
+.btn-outline-danger {
+    background: transparent;
+    color: var(--syn-danger);
+    border-color: var(--syn-danger);
+}
+
+.btn-outline-danger:hover {
+    background: var(--syn-danger);
+    color: var(--syn-bone-elevated);
+}
+
+.btn-light {
+    background: var(--syn-bone);
+    border-color: var(--syn-border);
+    color: var(--syn-ink);
+}
+
+/* =================== Cards =================== */
+.card {
+    background: var(--syn-bone-elevated);
+    border: 1px solid var(--syn-border);
+    border-radius: var(--syn-radius-lg) !important;
+    box-shadow: var(--syn-shadow-xs);
+    transition: var(--syn-transition);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--syn-shadow-lg);
+    border-color: var(--syn-iris-soft);
+}
+
+.card:focus-within {
+    outline: 2px solid var(--syn-iris);
+    outline-offset: 2px;
+}
+
+.card-header {
+    background: var(--syn-bone) !important;
+    border-bottom: 1px solid var(--syn-border);
+    padding: var(--space-4) var(--space-5);
+    font-weight: 600;
+    color: var(--syn-ink);
+}
+
+.card-header.bg-primary {
+    background: var(--syn-ink) !important;
+    color: var(--syn-bone);
+    border-bottom: 3px solid var(--syn-iris);
+}
+
+.card-header.bg-success {
+    background: var(--syn-ink) !important;
+    color: var(--syn-bone);
+    border-bottom: 3px solid var(--syn-ember);
+}
+
+.card-header.bg-info {
+    background: var(--syn-ink) !important;
+    color: var(--syn-bone);
+    border-bottom: 3px solid var(--syn-magenta);
+}
+
+.card-header.bg-dark {
+    background: var(--syn-ink) !important;
+    color: var(--syn-bone);
+}
+
+.card-header h4 {
+    color: inherit;
+    margin: 0;
+    font-family: 'Fraunces', serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: var(--space-5);
+}
+
+.card-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 40;
+    font-weight: 600;
+    color: var(--syn-ink);
+}
+
+/* Entry card — image zoom su hover */
+.entry-card-img-top {
+    height: 220px;
+    object-fit: cover;
+    transition: transform 500ms var(--syn-ease);
+}
+
+.card:hover .entry-card-img-top {
+    transform: scale(1.06);
+}
+
+.entry-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--syn-radius-sm);
+    border: 1px solid var(--syn-border);
+}
+
+/* =================== Badges =================== */
+.badge {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--syn-radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.badge.bg-primary {
+    background: var(--syn-iris) !important;
+    color: var(--syn-bone-elevated);
+}
+
+.badge.bg-secondary {
+    background: var(--syn-ink-soft) !important;
+    color: var(--syn-bone-elevated);
+}
+
+.badge.bg-success {
+    background: var(--syn-success) !important;
+}
+
+.badge.bg-info {
+    background: var(--syn-info) !important;
+    color: var(--syn-bone-elevated);
+}
+
+.badge.bg-warning {
+    background: var(--syn-warning) !important;
+    color: var(--syn-bone-elevated) !important;
+}
+
+.badge.bg-danger {
+    background: var(--syn-danger) !important;
+}
+
+.fs-6 {
+    padding: var(--space-2) var(--space-4);
+    font-size: 0.875rem !important;
+}
+
+/* =================== Forms =================== */
+.form-control,
+.form-select {
+    background: var(--syn-bone-elevated);
+    border: 1.5px solid var(--syn-border-strong);
+    border-radius: var(--syn-radius-sm);
+    padding: var(--space-3) var(--space-4);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    color: var(--syn-ink);
+    transition: var(--syn-transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--syn-iris);
+    box-shadow: 0 0 0 3px var(--syn-iris-soft);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--syn-ink-soft);
+    opacity: 0.6;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: var(--syn-ink);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-2);
+}
+
+fieldset legend {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: 'opsz' 40;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--syn-ink);
+    margin-bottom: var(--space-3);
+}
+
+.form-text {
+    font-size: 0.8125rem;
+    color: var(--syn-ink-soft);
+    margin-top: var(--space-1);
+}
+
+.form-check {
+    padding-left: 1.75rem;
+    margin-bottom: var(--space-2);
+}
+
+.form-check-input {
+    width: 1.15em;
+    height: 1.15em;
+    margin-top: 0.25em;
+    margin-left: -1.75rem;
+    border: 1.5px solid var(--syn-border-strong);
+    background: var(--syn-bone-elevated);
+    cursor: pointer;
+    transition: var(--syn-transition);
+}
+
+.form-check-input:checked {
+    background-color: var(--syn-iris);
+    border-color: var(--syn-iris);
+}
+
+.form-check-input:focus {
+    border-color: var(--syn-iris);
+    box-shadow: 0 0 0 3px var(--syn-iris-soft);
+    outline: none;
+}
+
+.form-check-label {
+    font-weight: 400;
+    color: var(--syn-ink);
+    cursor: pointer;
+}
+
+.input-group .btn {
+    border-radius: 0 var(--syn-radius-sm) var(--syn-radius-sm) 0;
+}
+
+/* =================== Alerts =================== */
+.alert {
+    border: 1px solid var(--syn-border);
+    border-left-width: 4px;
+    border-radius: var(--syn-radius-md);
+    padding: var(--space-4) var(--space-5);
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-4);
+}
+
+.alert-success {
+    background: #F0FDF4;
+    color: #065F46;
+    border-left-color: var(--syn-success);
+}
+
+.alert-danger {
+    background: #FEF2F2;
+    color: #7F1D1D;
+    border-left-color: var(--syn-danger);
+}
+
+.alert-warning {
+    background: #FFFBEB;
+    color: #78350F;
+    border-left-color: var(--syn-warning);
+}
+
+.alert-info {
+    background: var(--syn-iris-soft);
+    color: var(--syn-iris-hover);
+    border-left-color: var(--syn-iris);
+}
+
+.alert-link {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+/* =================== Footer =================== */
+footer {
+    background: var(--syn-ink) !important;
+    color: rgba(250, 247, 242, 0.85);
+    padding: var(--space-8) 0 !important;
+    margin-top: var(--space-10) !important;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--syn-prism);
+}
+
+footer strong {
+    font-family: 'Fraunces', serif;
+    background: var(--syn-prism);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+footer p {
+    margin-bottom: var(--space-2);
+}
+
+footer .small {
+    color: rgba(250, 247, 242, 0.55);
+}
+
+/* =================== Tables =================== */
+.table {
+    --bs-table-bg: transparent;
+    color: var(--syn-ink);
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: var(--syn-bone);
+    color: var(--syn-ink-soft);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--syn-border-strong);
+    border-top: none;
+}
+
+.table tbody td {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--syn-border);
+    vertical-align: middle;
+    color: var(--syn-ink);
+}
+
+.table-hover tbody tr {
+    transition: background 150ms var(--syn-ease);
+}
+
+.table-hover tbody tr:hover {
+    background: var(--syn-iris-soft);
+}
+
+/* =================== Progress bar (score enneagramma) =================== */
+.progress {
+    background: var(--syn-border);
+    border-radius: var(--syn-radius-full);
+    overflow: hidden;
+    height: 10px;
+}
+
+.progress-bar {
+    background: var(--syn-prism);
+    color: var(--syn-bone-elevated);
+    font-weight: 600;
+    font-size: 0.75rem;
+    transition: width 1200ms var(--syn-ease);
+}
+
+.score-bar {
+    height: 24px;
+    border-radius: var(--syn-radius-sm);
+}
+
+.score-bar .progress-bar {
+    background: var(--syn-prism);
+}
+
+/* =================== Profile =================== */
+.profile-avatar {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--syn-radius-full);
+    border: 4px solid var(--syn-bone-elevated);
+    box-shadow: 0 0 0 3px var(--syn-iris-soft), var(--syn-shadow-md);
+}
+
+/* =================== Entry detail =================== */
+.entry-detail-image {
+    max-height: 600px;
+    object-fit: contain;
+    border-radius: var(--syn-radius-lg);
+    box-shadow: var(--syn-shadow-md);
+}
+
+.entry-text-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 40;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--syn-ink);
+    padding: var(--space-4);
+}
+
+audio {
+    width: 100%;
+    border-radius: var(--syn-radius-sm);
+}
+
+/* =================== Zen caption (blockquote) =================== */
+blockquote.blockquote-footer {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: 'opsz' 40, 'SOFT' 30;
+    font-style: italic;
+    color: var(--syn-iris);
+    border-left: 2px solid var(--syn-iris-soft);
+    padding-left: var(--space-3);
+    margin: var(--space-2) 0 !important;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+blockquote.blockquote-footer::before {
+    content: none;
+}
+
+/* =================== List group =================== */
+.list-group {
+    border-radius: var(--syn-radius-md);
+    overflow: hidden;
+}
+
+.list-group-item {
+    background: var(--syn-bone-elevated);
+    border: 1px solid var(--syn-border);
+    padding: var(--space-4) var(--space-5);
+    color: var(--syn-ink);
+    transition: var(--syn-transition);
+}
+
+.list-group-item:hover {
+    background: var(--syn-bone);
+}
+
+.list-group-item-success {
+    background: #F0FDF4 !important;
+    border-left: 3px solid var(--syn-success) !important;
+}
+
+.list-group-flush .list-group-item {
+    border-left: 0;
+    border-right: 0;
+}
+
+/* =================== Sticky filter sidebar =================== */
+.sticky-filter-sidebar {
+    top: 90px;
+}
+
+/* =================== Stat card icons (creator dashboard) =================== */
+.card-body .fs-3 {
+    font-size: 1.75rem !important;
+    background: var(--syn-prism);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin-bottom: var(--space-2);
+}
+
+/* =================== Prism mark utility =================== */
+.syn-prism-divider {
+    height: 2px;
+    background: var(--syn-prism);
+    border: none;
+    margin: var(--space-6) 0;
+    opacity: 0.35;
+}
+
+/* =================== Animations =================== */
+@keyframes synFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main > section,
+main > article,
+main > header {
+    animation: synFadeUp 480ms var(--syn-ease) both;
+}
+
+main > *:nth-child(2) { animation-delay: 80ms; }
+main > *:nth-child(3) { animation-delay: 160ms; }
+main > *:nth-child(4) { animation-delay: 240ms; }
+
+/* =================== Scrollbar =================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--syn-bone);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--syn-border-strong);
+    border-radius: var(--syn-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--syn-iris);
+}
+
+/* =================== Focus visibility (a11y) =================== */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 3px solid rgba(91, 63, 217, 0.35);
+    outline-offset: 2px;
+    border-radius: var(--syn-radius-xs);
+}
+
+/* =================== Reduced motion =================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* =================== Responsive =================== */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: var(--space-8) var(--space-4) !important;
+    }
+
+    .jumbotron h1,
+    .jumbotron .display-4 {
+        font-size: 2.25rem;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .navbar-nav .nav-link::after {
+        display: none;
+    }
+}
+
+/* =================== Enneagram type utilities =================== */
+.type-1 { color: var(--syn-type-1); }
+.type-2 { color: var(--syn-type-2); }
+.type-3 { color: var(--syn-type-3); }
+.type-4 { color: var(--syn-type-4); }
+.type-5 { color: var(--syn-type-5); }
+.type-6 { color: var(--syn-type-6); }
+.type-7 { color: var(--syn-type-7); }
+.type-8 { color: var(--syn-type-8); }
+.type-9 { color: var(--syn-type-9); }
+
+.type-bg-1 { background: var(--syn-type-1); color: var(--syn-bone-elevated); }
+.type-bg-2 { background: var(--syn-type-2); color: var(--syn-bone-elevated); }
+.type-bg-3 { background: var(--syn-type-3); color: var(--syn-ink); }
+.type-bg-4 { background: var(--syn-type-4); color: var(--syn-bone-elevated); }
+.type-bg-5 { background: var(--syn-type-5); color: var(--syn-bone-elevated); }
+.type-bg-6 { background: var(--syn-type-6); color: var(--syn-bone-elevated); }
+.type-bg-7 { background: var(--syn-type-7); color: var(--syn-bone-elevated); }
+.type-bg-8 { background: var(--syn-type-8); color: var(--syn-bone-elevated); }
+.type-bg-9 { background: var(--syn-type-9); color: var(--syn-bone-elevated); }
+
+/* =================== Type badge (Fase 12c) =================== */
+.syn-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--syn-radius-full);
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 40;
+    font-weight: 700;
+    color: var(--syn-bone-elevated);
+    line-height: 1;
+    vertical-align: middle;
+    text-decoration: none;
+    transition: var(--syn-transition);
+    box-shadow: 0 2px 8px rgba(26, 22, 37, 0.12);
+}
+
+.syn-type-badge:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 4px 12px rgba(26, 22, 37, 0.18);
+    color: var(--syn-bone-elevated);
+}
+
+.syn-type-badge i {
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.syn-type-badge__num {
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.syn-type-badge__name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.875em;
+    text-transform: none;
+    letter-spacing: 0.01em;
+}
+
+/* Sizes */
+.syn-type-badge--sm {
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.75rem;
+    gap: var(--space-1);
+}
+
+.syn-type-badge--md {
+    font-size: 0.875rem;
+}
+
+.syn-type-badge--lg {
+    padding: var(--space-3) var(--space-5);
+    font-size: 1.0625rem;
+    gap: var(--space-2);
+}
+
+/* Variants */
+.syn-type-badge--outline {
+    background: transparent !important;
+    border: 2px solid currentColor;
+}
+
+.syn-type-badge--outline.type-bg-1 { color: var(--syn-type-1); background: transparent !important; }
+.syn-type-badge--outline.type-bg-2 { color: var(--syn-type-2); background: transparent !important; }
+.syn-type-badge--outline.type-bg-3 { color: var(--syn-type-3); background: transparent !important; }
+.syn-type-badge--outline.type-bg-4 { color: var(--syn-type-4); background: transparent !important; }
+.syn-type-badge--outline.type-bg-5 { color: var(--syn-type-5); background: transparent !important; }
+.syn-type-badge--outline.type-bg-6 { color: var(--syn-type-6); background: transparent !important; }
+.syn-type-badge--outline.type-bg-7 { color: var(--syn-type-7); background: transparent !important; }
+.syn-type-badge--outline.type-bg-8 { color: var(--syn-type-8); background: transparent !important; }
+.syn-type-badge--outline.type-bg-9 { color: var(--syn-type-9); background: transparent !important; }
+
+.syn-type-badge--ghost {
+    background: transparent !important;
+    box-shadow: none;
+}
+
+.syn-type-badge--unknown {
+    background: var(--syn-ink-soft);
+    color: var(--syn-bone);
+}
+
+/* =================== Enneagram wheel (Fase 12b p1) =================== */
+.prism-wheel {
+    filter: drop-shadow(0 6px 18px rgba(91, 63, 217, 0.18));
+    transition: transform 500ms var(--syn-ease);
+}
+
+.prism-wheel:hover {
+    transform: rotate(-8deg) scale(1.04);
+}
+
+.prism-wheel path {
+    transition: opacity 400ms var(--syn-ease);
+}
+
+/* =================== Prism bullet for list-group (Fase 12b p2) =================== */
+.list-group-prism .list-group-item {
+    position: relative;
+    padding-left: calc(var(--space-5) + 32px);
+}
+
+.list-group-prism .list-group-item::before {
+    content: '';
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    background: url('/img/prism-mark.svg') no-repeat center / contain;
+    opacity: 0.9;
+    transition: transform 300ms var(--syn-ease);
+}
+
+.list-group-prism .list-group-item:hover::before {
+    transform: translateY(-50%) rotate(18deg) scale(1.12);
+    opacity: 1;
+}
+
+/* =================== Dark mode (Fase 12b p3) =================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --syn-ink: #F5F2EA;
+        --syn-ink-soft: #A8A2B5;
+        --syn-bone: #120F1C;
+        --syn-bone-elevated: #1C1828;
+        --syn-border: rgba(245, 242, 234, 0.12);
+        --syn-border-strong: rgba(245, 242, 234, 0.22);
+        --syn-iris: #8B6FF5;
+        --syn-iris-hover: #A08BF7;
+        --syn-iris-soft: rgba(139, 111, 245, 0.22);
+        --syn-ember: #FF7043;
+        --syn-ember-hover: #FF8A5B;
+    }
+
+    body {
+        background-color: var(--syn-bone);
+        color: var(--syn-ink);
+    }
+
+    .jumbotron,
+    section.jumbotron {
+        background: var(--syn-bone) !important;
+        color: var(--syn-ink) !important;
+    }
+
+    .jumbotron::before {
+        opacity: 0.1;
+    }
+
+    .card {
+        background: var(--syn-bone-elevated);
+        border-color: var(--syn-border);
+    }
+
+    .card-header {
+        background: var(--syn-bone-elevated) !important;
+        border-bottom-color: var(--syn-border);
+    }
+
+    .card-header.bg-primary,
+    .card-header.bg-success,
+    .card-header.bg-info,
+    .card-header.bg-dark {
+        background: #0A0814 !important;
+        color: var(--syn-ink);
+    }
+
+    .navbar {
+        background: var(--syn-bone-elevated) !important;
+        border-bottom-color: var(--syn-border);
+    }
+
+    .navbar-brand,
+    .navbar-nav .nav-link {
+        color: var(--syn-ink) !important;
+    }
+
+    .form-control,
+    .form-select {
+        background: var(--syn-bone-elevated);
+        border-color: var(--syn-border-strong);
+        color: var(--syn-ink);
+    }
+
+    .form-control::placeholder {
+        color: var(--syn-ink-soft);
+    }
+
+    .form-check-input {
+        background: var(--syn-bone-elevated);
+        border-color: var(--syn-border-strong);
+    }
+
+    .form-check-label {
+        color: var(--syn-ink);
+    }
+
+    .list-group-item {
+        background: var(--syn-bone-elevated);
+        border-color: var(--syn-border);
+        color: var(--syn-ink);
+    }
+
+    .list-group-item:hover {
+        background: #221E32;
+    }
+
+    .table,
+    .table tbody td {
+        color: var(--syn-ink);
+        border-bottom-color: var(--syn-border);
+    }
+
+    .table thead th {
+        background: var(--syn-bone-elevated);
+        color: var(--syn-ink-soft);
+        border-bottom-color: var(--syn-border-strong);
+    }
+
+    .table-hover tbody tr:hover {
+        background: rgba(139, 111, 245, 0.12);
+    }
+
+    .alert-success {
+        background: rgba(14, 159, 110, 0.18);
+        color: #6EE7B7;
+        border-left-color: #6EE7B7;
+    }
+
+    .alert-danger {
+        background: rgba(220, 38, 38, 0.18);
+        color: #FCA5A5;
+        border-left-color: #FCA5A5;
+    }
+
+    .alert-warning {
+        background: rgba(217, 119, 6, 0.18);
+        color: #FCD34D;
+        border-left-color: #FCD34D;
+    }
+
+    .alert-info {
+        background: rgba(139, 111, 245, 0.18);
+        color: var(--syn-ink);
+        border-left-color: var(--syn-iris);
+    }
+
+    .profile-avatar {
+        border-color: var(--syn-bone-elevated);
+    }
+
+    .prism-wheel circle[fill='#FAF7F2'] {
+        fill: var(--syn-bone-elevated);
+    }
+
+    .prism-wheel text {
+        fill: var(--syn-ink);
+    }
+
+    .btn-secondary {
+        background: var(--syn-ink);
+        color: var(--syn-bone);
+    }
+
+    .btn-outline-secondary {
+        color: var(--syn-ink);
+        border-color: var(--syn-border-strong);
+    }
+
+    .btn-outline-secondary:hover {
+        background: rgba(245, 242, 234, 0.08);
+        color: var(--syn-ink);
+    }
+
+    .btn-light {
+        background: var(--syn-bone-elevated);
+        border-color: var(--syn-border);
+        color: var(--syn-ink);
+    }
+
+    blockquote.blockquote-footer {
+        color: var(--syn-iris-hover);
+    }
+
+    hr {
+        background: var(--syn-border);
+    }
+
+    footer {
+        background: #0A0814 !important;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--syn-bone);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--syn-border-strong);
+    }
+}

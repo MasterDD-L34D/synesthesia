@@ -1,0 +1,149 @@
+<!-- views/pages/entry-detail.ejs -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header', { user: user }) %>
+
+    <main class="container py-4">
+        <% if (entry) { %>
+            <article class="card shadow-sm mb-4" data-entry-id="<%= entry.id %>">
+                <header class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0"><%= entry.title %></h1>
+                    <p class="mb-0 small">
+                        di <a href="/profile/<%= entry.author_username %>" class="text-white-50"><%= entry.author_username %></a>
+                    </p>
+                </header>
+                <div class="card-body">
+                    <% if (entry.media_type === 'image') { %>
+                        <figure class="text-center mb-4">
+                            <img src="<%= entry.main_file_path %>" class="img-fluid rounded entry-detail-image" alt="<%= entry.title %>">
+                            <figcaption class="text-muted small mt-2">Opera visiva</figcaption>
+                        </figure>
+                    <% } else if (entry.media_type === 'audio') { %>
+                        <figure class="text-center mb-4">
+                            <audio controls class="w-100">
+                                <source src="<%= entry.main_file_path %>" type="audio/mpeg">
+                                Il tuo browser non supporta l'elemento audio.
+                            </audio>
+                            <figcaption class="text-muted small mt-2">Opera audio</figcaption>
+                        </figure>
+                    <% } else if (entry.media_type === 'text') { %>
+                        <div class="card border-light mb-4">
+                            <div class="card-body bg-light rounded">
+                                <pre class="entry-text-content"><%= entry.main_file_path %></pre>
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <h2 class="h4 mb-3">Descrizione</h2>
+                    <p><%= entry.description %></p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <% if (user) { %>
+                                <button type="button" class="btn <%= isLiked ? 'btn-danger' : 'btn-outline-danger' %> btn-sm" id="likeButton">
+                                    <i class="bi bi-heart<%= isLiked ? '-fill' : '' %>"></i>
+                                    <span id="likesCountText"><%= likesCount %></span> Like
+                                </button>
+                                <button type="button" class="btn <%= isSaved ? 'btn-secondary' : 'btn-outline-secondary' %> btn-sm" id="saveButton">
+                                    <i class="bi bi-bookmark<%= isSaved ? '-fill' : '' %>"></i>
+                                    <span id="savesCountText"><%= savesCount %></span> Salvati
+                                </button>
+                            <% } else { %>
+                                <span class="badge bg-secondary me-2">
+                                    <i class="bi bi-heart-fill"></i> <%= likesCount %> Like
+                                </span>
+                                <span class="badge bg-secondary">
+                                    <i class="bi bi-bookmark-fill"></i> <%= savesCount %> Salvati
+                                </span>
+                                <small class="text-muted ms-2">Accedi per interagire</small>
+                            <% } %>
+                        </div>
+                        <span class="text-muted small">
+                            Pubblicato il <%= new Date(entry.created_at).toLocaleDateString() %>
+                        </span>
+                    </div>
+                </div>
+            </article>
+
+            <section class="mt-5">
+                <h2 class="mb-4">Commenti (<%= comments.length %>)</h2>
+
+                <% if (user) { %>
+                    <form id="commentForm" class="mb-4 card p-3 shadow-sm">
+                        <div class="mb-3">
+                            <label for="commentContent" class="form-label visually-hidden">Il tuo commento</label>
+                            <textarea class="form-control" id="commentContent" name="content" rows="3" placeholder="Aggiungi un commento..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary align-self-end">
+                            <i class="bi bi-chat-fill me-2"></i>Invia Commento
+                        </button>
+                    </form>
+                <% } else { %>
+                    <div class="alert alert-info text-center" role="alert">
+                        <a href="/login">Accedi</a> per lasciare un commento.
+                    </div>
+                <% } %>
+
+                <div id="commentsList">
+                    <% if (comments && comments.length > 0) { %>
+                        <%
+                            // Render ricorsivo albero commenti.
+                            const renderComments = (items, parentId = null, depth = 0) => {
+                                const children = items.filter((c) => c.parent_comment_id === parentId);
+                                let html = '';
+                                for (const c of children) {
+                                    const indent = depth > 0 ? 'ms-5' : '';
+                                    html += `<div class="card mb-3 ${indent}">
+                                        <div class="card-body">
+                                            <h6 class="card-title mb-1">
+                                                <i class="bi bi-person-circle me-1"></i>${c.author_username}
+                                                <small class="text-muted ms-2">${new Date(c.created_at).toLocaleString()}</small>
+                                            </h6>
+                                            <p class="card-text">${c.content}</p>`;
+                                    if (user) {
+                                        html += `<button type="button" class="btn btn-link btn-sm text-decoration-none reply-button" data-comment-id="${c.id}">Rispondi</button>
+                                            <div id="replyForm-${c.id}" class="mt-2 d-none">
+                                                <form class="reply-form" data-parent-id="${c.id}">
+                                                    <textarea class="form-control mb-2" name="content" rows="2" placeholder="La tua risposta..." required></textarea>
+                                                    <button type="submit" class="btn btn-sm btn-primary">Invia Risposta</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary cancel-reply-button">Annulla</button>
+                                                </form>
+                                            </div>`;
+                                    }
+                                    html += `</div></div>`;
+                                    html += renderComments(items, c.id, depth + 1);
+                                }
+                                return html;
+                            };
+                        %>
+                        <div class="list-group list-group-flush">
+                            <%- renderComments(comments) %>
+                        </div>
+                    <% } else { %>
+                        <div class="alert alert-info text-center" role="alert">
+                            Ancora nessun commento. Sii il primo a lasciare il tuo feedback!
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+        <% } else { %>
+            <div class="alert alert-danger text-center" role="alert">
+                Opera non trovata o non pubblicata.
+            </div>
+        <% } %>
+    </main>
+
+    <%- include('../partials/footer') %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/entry-detail.js"></script>
+</body>
+</html>
