@@ -43,6 +43,7 @@
                                 variant: 'filled'
                             }) %>
                         </div>
+                        <%- include('../partials/type-description', { type: profileUser.dominant_type }) %>
                         <% if (profileUser.wing) { %>
                             <p class="mb-1 text-muted small">Riflesso: w<%= profileUser.wing %></p>
                         <% } %>
@@ -111,6 +112,35 @@
                 </section>
             </div>
         </section>
+
+        <% if (isOwner && savedEntries && savedEntries.length > 0) { %>
+            <section class="card shadow-sm p-4 mt-4">
+                <h2 class="h4 mb-3"><i class="bi bi-bookmark-fill me-2"></i>Opere salvate</h2>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <% savedEntries.forEach((entry) => { %>
+                        <article class="col">
+                            <div class="card h-100">
+                                <a href="/entries/<%= entry.id %>">
+                                    <img
+                                        src="<%= entry.thumbnail_path || '/img/default-thumbnail.png' %>"
+                                        class="card-img-top entry-card-img-top"
+                                        alt="<%= entry.title %>"
+                                    >
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= entry.title %></h5>
+                                    <p class="card-text small text-muted mb-1">
+                                        di <a href="/profile/<%= entry.author_username %>"><%= entry.author_username %></a>
+                                        <span class="ms-2"><i class="bi bi-heart-fill text-danger me-1"></i><%= entry.likes_count %></span>
+                                    </p>
+                                    <a href="/entries/<%= entry.id %>" class="btn btn-sm btn-outline-primary">Vedi</a>
+                                </div>
+                            </div>
+                        </article>
+                    <% }); %>
+                </div>
+            </section>
+        <% } %>
 
         <% if (isOwner) { %>
             <section class="card shadow-sm p-4 mt-4">

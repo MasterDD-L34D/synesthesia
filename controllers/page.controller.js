@@ -200,12 +200,17 @@ class PageController {
             const profileEntries = await this.entryService.getCreatorEntriesWithStats(
                 profileUser.user_id
             );
+            const isOwner = Boolean(req.user && req.user.id === profileUser.user_id);
+            const savedEntries = isOwner
+                ? await this.entryService.getSavedEntriesByUser(profileUser.user_id)
+                : [];
             res.render('pages/profile', {
                 title: `Profilo di ${username}`,
                 user: req.user,
                 profileUser,
                 profileEntries,
-                isOwner: Boolean(req.user && req.user.id === profileUser.user_id),
+                savedEntries,
+                isOwner,
             });
         } catch (error) {
             console.error('Error rendering profile page:', error);

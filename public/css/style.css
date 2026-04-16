@@ -267,6 +267,40 @@ hr {
     transform: scaleX(1);
 }
 
+/* Navbar dropdown menu */
+.dropdown-menu {
+    background: var(--syn-bone-elevated);
+    border: 1px solid var(--syn-border);
+    border-radius: var(--syn-radius-md);
+    box-shadow: var(--syn-shadow-lg);
+    padding: var(--space-2) 0;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    padding: var(--space-2) var(--space-4);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    color: var(--syn-ink);
+    transition: var(--syn-transition);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background: var(--syn-iris-soft);
+    color: var(--syn-iris);
+}
+
+.dropdown-item.text-danger:hover {
+    background: rgba(220, 38, 38, 0.08);
+    color: var(--syn-danger);
+}
+
+.dropdown-divider {
+    border-top-color: var(--syn-border);
+    margin: var(--space-1) 0;
+}
+
 .navbar-toggler {
     border: 1px solid var(--syn-border-strong);
     padding: var(--space-2);

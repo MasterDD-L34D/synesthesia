@@ -1,0 +1,50 @@
+<%
+// views/partials/type-description.ejs
+// Descrizione narrativa per ciascuna delle 9 sfaccettature del Prisma Interiore.
+// Parametri: type (1..9)
+const t = Number(type);
+const descriptions = {
+    1: {
+        name: 'Cesellatore',
+        text: 'Il Cesellatore cerca la perfezione nel dettaglio. Ogni opera nasce da una scelta consapevole, ogni linea è frutto di disciplina e visione. Il suo impulso creativo è guidato dall\'ordine interiore: non si accontenta del "buono abbastanza", vuole che ogni elemento sia al suo posto. La sua sfida? Imparare che l\'imperfezione è parte della bellezza.',
+    },
+    2: {
+        name: 'Donatore',
+        text: 'Il Donatore crea per connettere. Le sue opere sono ponti tra persone, gesti che esprimono cura e desiderio di essere presente. Il suo impulso creativo nasce dal bisogno di far sentire gli altri speciali. La sua sfida? Ricordare che anche la propria voce merita di essere ascoltata.',
+    },
+    3: {
+        name: 'Faro',
+        text: 'Il Faro punta in alto. Ogni opera è un passo verso un obiettivo, una dimostrazione di ciò che è possibile raggiungere. Il suo impulso creativo è alimentato dall\'ambizione e dalla chiarezza di visione. La sua sfida? Rallentare abbastanza da sentire cosa vuole davvero, oltre il successo.',
+    },
+    4: {
+        name: 'Lirico',
+        text: 'Il Lirico trasforma le emozioni in forma. Ogni opera è un frammento del suo mondo interiore, unico e irripetibile. Il suo impulso creativo nasce dalla profondità del sentire: melanconia, bellezza, nostalgia diventano colore e suono. La sua sfida? Accettare che l\'unicità non richiede isolamento.',
+    },
+    5: {
+        name: 'Cartografo',
+        text: 'Il Cartografo osserva prima di creare. Le sue opere nascono dalla curiosità e dal desiderio di comprendere ciò che gli altri non vedono. Il suo impulso creativo è alimentato dalla conoscenza e dall\'analisi. La sua sfida? Condividere le proprie scoperte invece di tenerle per sé.',
+    },
+    6: {
+        name: 'Custode',
+        text: 'Il Custode crea con lealtà verso un\'idea o una comunità. Le sue opere sono costruite con cura e attenzione, frutto di un processo riflessivo e responsabile. Il suo impulso creativo è guidato dal desiderio di proteggere e sostenere. La sua sfida? Fidarsi della propria voce senza cercare continuamente conferme.',
+    },
+    7: {
+        name: 'Viandante',
+        text: 'Il Viandante esplora senza sosta. Ogni opera è un\'avventura, un salto verso l\'ignoto che trasforma la curiosità in energia creativa. Il suo impulso nasce dalla gioia della scoperta e dal rifiuto della monotonia. La sua sfida? Restare abbastanza a lungo su un progetto per portarlo a compimento.',
+    },
+    8: {
+        name: 'Titano',
+        text: 'Il Titano crea con forza e determinazione. Le sue opere prendono posizione, sfidano il conformismo e lasciano un segno. Il suo impulso creativo è alimentato dalla passione e dal desiderio di impatto. La sua sfida? Lasciare spazio alla vulnerabilità accanto alla potenza.',
+    },
+    9: {
+        name: 'Orizzonte',
+        text: 'L\'Orizzonte cerca armonia in ogni cosa. Le sue opere emanano calma, equilibrio e accoglienza. Il suo impulso creativo nasce dal desiderio di unire, non dividere. La sua sfida? Dare voce ai propri bisogni creativi invece di fondersi con quelli degli altri.',
+    },
+};
+const d = descriptions[t];
+%>
+<% if (d) { %>
+    <div class="syn-type-desc mt-3 mb-3">
+        <p class="small text-center fst-italic mb-0"><%= d.text %></p>
+    </div>
+<% } %>

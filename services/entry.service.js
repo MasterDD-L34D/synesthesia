@@ -225,6 +225,24 @@ class EntryService {
         );
     }
 
+    // Fase 14 — lista opere salvate da un utente (per sezione profilo)
+    async getSavedEntriesByUser(userId, limit = 20) {
+        const sql = `
+            SELECT
+                e.id, e.title, e.media_type,
+                u.username AS author_username,
+                (SELECT ef.path FROM entry_files ef WHERE ef.entry_id = e.id AND ef.type = 'thumbnail' LIMIT 1) AS thumbnail_path,
+                (SELECT COUNT(*) FROM likes l WHERE l.entry_id = e.id) AS likes_count
+            FROM saved_entries se
+            JOIN entries e ON e.id = se.entry_id
+            JOIN users u ON u.id = e.user_id
+            WHERE se.user_id = ? AND e.status = 'published'
+            ORDER BY se.created_at DESC
+            LIMIT ?
+        `;
+        return this.db.all(sql, [userId, limit]);
+    }
+
     async removeSave(entryId, userId) {
         const r = await this.db.run(
             `DELETE FROM saved_entries WHERE entry_id = ? AND user_id = ?`,

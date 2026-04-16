@@ -72,7 +72,9 @@
                     <% recentEntries.forEach(entry => { %>
                         <article class="col">
                             <div class="card h-100 shadow-sm">
-                                <img src="<%= entry.thumbnail_path || '/img/default-thumbnail.png' %>" class="card-img-top entry-card-img-top" alt="<%= entry.title %>">
+                                <a href="/entries/<%= entry.id %>">
+                                    <img src="<%= entry.thumbnail_path || '/img/default-thumbnail.png' %>" class="card-img-top entry-card-img-top" alt="<%= entry.title %>">
+                                </a>
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title"><%= entry.title %></h5>
                                     <p class="card-text text-muted small mb-2">di <a href="/profile/<%= entry.author_username %>"><%= entry.author_username %></a></p>
