@@ -224,5 +224,8 @@ page('/search', (ctx) => {
     loadSearchResults(ctx); // Carica e mostra i risultati
 });
 
-// Avvia Page.js (assicurati che sia l'unica chiamata a page() in tutta l'app)
-page();
+// Avvia Page.js con click: false — NON intercetta i click su <a> link.
+// Solo page.redirect() programmatico (es. search) triggera il router.
+// Senza questo flag, Page.js cattura tutti i link e i handler vuoti rompono
+// la navigazione in un'app server-rendered (EJS).
+page({ click: false });

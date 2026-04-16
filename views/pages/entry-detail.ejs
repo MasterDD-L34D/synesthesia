@@ -96,6 +96,19 @@
                 <div id="commentsList">
                     <% if (comments && comments.length > 0) { %>
                         <%
+                            // Helper timestamp relativo
+                            const timeAgo = (dateStr) => {
+                                const diff = Date.now() - new Date(dateStr).getTime();
+                                const mins = Math.floor(diff / 60000);
+                                if (mins < 1) return 'adesso';
+                                if (mins < 60) return `${mins}m fa`;
+                                const hours = Math.floor(mins / 60);
+                                if (hours < 24) return `${hours}h fa`;
+                                const days = Math.floor(hours / 24);
+                                if (days < 30) return `${days}g fa`;
+                                return new Date(dateStr).toLocaleDateString();
+                            };
+
                             // Render ricorsivo albero commenti.
                             const renderComments = (items, parentId = null, depth = 0) => {
                                 const children = items.filter((c) => c.parent_comment_id === parentId);
@@ -104,9 +117,10 @@
                                     const indent = depth > 0 ? 'ms-5' : '';
                                     html += `<div class="card mb-3 ${indent}">
                                         <div class="card-body">
-                                            <h6 class="card-title mb-1">
-                                                <i class="bi bi-person-circle me-1"></i>${c.author_username}
-                                                <small class="text-muted ms-2">${new Date(c.created_at).toLocaleString()}</small>
+                                            <h6 class="card-title mb-1 d-flex align-items-center gap-2">
+                                                <i class="bi bi-person-circle"></i>
+                                                <a href="/profile/${c.author_username}" class="text-decoration-none">${c.author_username}</a>
+                                                <small class="text-muted ms-auto">${timeAgo(c.created_at)}</small>
                                             </h6>
                                             <p class="card-text">${c.content}</p>`;
                                     if (user) {

@@ -1155,6 +1155,34 @@ button:focus-visible,
     color: var(--syn-bone);
 }
 
+/* =================== Hover effects text (Batch B 3.2) =================== */
+.card-title a {
+    color: var(--syn-ink);
+    text-decoration: none;
+    transition: color 200ms var(--syn-ease);
+}
+
+.card-title a:hover {
+    color: var(--syn-iris);
+    text-decoration: none;
+}
+
+.card-text a {
+    transition: color 200ms var(--syn-ease);
+}
+
+.card-text a:hover {
+    color: var(--syn-iris-hover);
+}
+
+/* Type description block */
+.syn-type-desc {
+    background: var(--syn-iris-soft);
+    border-radius: var(--syn-radius-md);
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--syn-iris);
+}
+
 /* =================== Enneagram wheel (Fase 12b p1) =================== */
 .prism-wheel {
     filter: drop-shadow(0 6px 18px rgba(91, 63, 217, 0.18));
