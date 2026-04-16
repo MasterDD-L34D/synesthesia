@@ -84,16 +84,23 @@ class PageController {
         }
     }
 
-    // Fase 3 — Submit del questionario.
+    // Fase 3 + Batch D 4.1 — Submit del questionario con flash descrittivo.
+    static FACET_NAMES = {
+        1: 'Cesellatore', 2: 'Donatore', 3: 'Faro', 4: 'Lirico', 5: 'Cartografo',
+        6: 'Custode', 7: 'Viandante', 8: 'Titano', 9: 'Orizzonte',
+    };
+
     async submitOnboarding(req, res, next) {
         try {
             const profile = await this.profileService.submitOnboardingAnswers(
                 req.user.id,
                 req.body
             );
+            const t = profile.dominant_type;
+            const name = PageController.FACET_NAMES[t] || '';
             req.flash(
                 'success_msg',
-                `Profilazione completata! Tipo dominante: ${profile.dominant_type ?? '—'}.`
+                `Mappatura completata! La tua sfaccettatura dominante è ${name} (${t}). Scopri cosa significa nel tuo profilo.`
             );
             res.redirect(`/profile/${req.user.username}`);
         } catch (error) {
