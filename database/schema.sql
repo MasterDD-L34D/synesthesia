@@ -160,6 +160,26 @@ CREATE TABLE IF NOT EXISTS recommended_tasks (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
+-- Tabella Notifiche (Batch D 4.3)
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,          -- destinatario
+    actor_id INTEGER NOT NULL,         -- chi ha triggerato (es. commentatore)
+    type TEXT NOT NULL CHECK (type IN ('comment_reply', 'comment_on_entry', 'like', 'new_follower')),
+    entry_id INTEGER,
+    comment_id INTEGER,
+    message TEXT NOT NULL,
+    is_read INTEGER NOT NULL DEFAULT 0 CHECK (is_read IN (0, 1)),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (actor_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (entry_id) REFERENCES entries (id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES comments (id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications (user_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_unread ON notifications (user_id, is_read);
+
 -- Tabella Interazioni (log eventi per scoring enneagrammatico e analytics)
 -- Aggiunta in Fase 1 per supportare Fase 6 (interazioni social) e Fase 7 (motore profilazione).
 CREATE TABLE IF NOT EXISTS interactions (

@@ -21,6 +21,7 @@ import EntryService from './services/entry.service.js';
 import ChallengeService from './services/challenge.service.js';
 import ZenService from './services/zen.service.js';
 import SearchService from './services/search.service.js';
+import NotificationService from './services/notification.service.js';
 
 // --- Import Controllers ---
 import AuthController from './controllers/auth.controller.js';
@@ -59,6 +60,7 @@ const entryService = new EntryService(db);
 const challengeService = new ChallengeService(db);
 const zenService = new ZenService(db);
 const searchService = new SearchService(db);
+const notificationService = new NotificationService(db);
 
 // --- Passport Configuration ---
 setupPassport(passport, userService, profileService); // Passa passport, userService e profileService
@@ -94,12 +96,19 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Global variables for EJS views
-app.use((req, res, next) => {
+// Global variables for EJS views + notification badge count
+app.use(async (req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error'); // Used by Passport for login errors
-    res.locals.user = req.user || null; // Makes user object available in all EJS views
+    res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
+    // Batch D 4.3: conteggio notifiche non lette per badge navbar
+    res.locals.unreadNotifications = 0;
+    if (req.user) {
+        try {
+            res.locals.unreadNotifications = await notificationService.getUnreadCount(req.user.id);
+        } catch (e) { /* ignore */ }
+    }
     next();
 });
 
@@ -109,12 +118,12 @@ const pageController = new PageController(entryService, challengeService, profil
 const creatorController = new CreatorController(entryService, zenService);
 const adminController = new AdminController(entryService, challengeService, userService); // Pass userService for potential user management
 const searchController = new SearchController(searchService);
-const entryApiController = new EntryApiController(entryService, profileService); // For like/comment handling
+const entryApiController = new EntryApiController(entryService, profileService, notificationService);
 
 // --- Route Registration ---
 app.use('/auth', authRoutes(authController, passport)); // Pass controller and passport to auth routes
 app.use('/', pageRoutes(pageController, entryService)); // Pass controller and services to page routes
-app.use('/api', apiRoutes(entryApiController, searchController, zenService, profileService)); // Pass API controllers/services
+app.use('/api', apiRoutes(entryApiController, searchController, zenService, profileService, notificationService));
 app.use('/creator', creatorRoutes(creatorController));
 app.use('/admin', adminRoutes(adminController));
 app.use('/search', pageRoutes(pageController, entryService)); // Register /search for the EJS page

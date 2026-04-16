@@ -40,6 +40,9 @@ export default (pageController, entryService) => { // Passa EntryService per ent
     // Search page
     router.get('/search', pageController.renderSearchPage.bind(pageController));
 
+    // About / ruoli
+    router.get('/about', pageController.renderAboutPage.bind(pageController));
+
 
     return router;
 };

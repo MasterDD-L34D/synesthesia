@@ -5,7 +5,7 @@ import { uploadSingleEntry } from '../middlewares/upload.middleware.js';
 
 const router = express.Router();
 
-export default (entryApiController, searchController, zenService, profileService) => {
+export default (entryApiController, searchController, zenService, profileService, notificationService) => {
     // --- Entry API (Likes & Comments) ---
     router.post('/entries/:id/like', isAuthenticated, entryApiController.likeEntry.bind(entryApiController));
     router.post('/entries/:id/comments', isAuthenticated, entryApiController.addComment.bind(entryApiController));
@@ -50,6 +50,22 @@ export default (entryApiController, searchController, zenService, profileService
         } catch (error) {
             next(error);
         }
+    });
+
+    // --- Notifications API (Batch D 4.3) ---
+    router.get('/notifications', isAuthenticated, async (req, res, next) => {
+        try {
+            const notifications = await notificationService.getRecent(req.user.id, 20);
+            const unread = await notificationService.getUnreadCount(req.user.id);
+            res.json({ success: true, data: notifications, unread });
+        } catch (error) { next(error); }
+    });
+
+    router.post('/notifications/read-all', isAuthenticated, async (req, res, next) => {
+        try {
+            const changed = await notificationService.markAllRead(req.user.id);
+            res.json({ success: true, marked: changed });
+        } catch (error) { next(error); }
     });
 
     return router;

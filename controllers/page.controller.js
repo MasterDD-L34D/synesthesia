@@ -261,6 +261,10 @@ class PageController {
     renderSearchPage(req, res) {
         res.render('pages/search', { title: 'Ricerca Avanzata', user: req.user });
     }
+
+    renderAboutPage(req, res) {
+        res.render('pages/about', { title: 'Cos\'è Synesthesia', user: req.user });
+    }
 }
 
 export default PageController;

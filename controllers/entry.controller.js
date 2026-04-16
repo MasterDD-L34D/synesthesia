@@ -4,9 +4,10 @@ import ProfileService from '../services/profile.service.js'; // Per l'aggiorname
 import { mapMediaType } from '../config/multer.js';
 
 class EntryApiController {
-    constructor(entryService, profileService) {
+    constructor(entryService, profileService, notificationService) {
         this.entryService = entryService;
         this.profileService = profileService;
+        this.notificationService = notificationService;
     }
 
     // Fase 5 — POST /api/entries (multipart). Multer middleware ha già
@@ -171,7 +172,42 @@ class EntryApiController {
 
             // Recupera il commento completo per la risposta, incluso username autore
             const newComment = await this.entryService.getCommentById(commentId);
-            
+
+            // Batch D 4.3 — Notifica autore opera + autore commento parent
+            if (this.notificationService) {
+                // Notifica all'autore dell'opera (se non è chi commenta)
+                if (entry.user_id !== userId) {
+                    await this.notificationService.create({
+                        userId: entry.user_id,
+                        actorId: userId,
+                        type: 'comment_on_entry',
+                        entryId: parseInt(id, 10),
+                        commentId,
+                        message: `${req.user.username} ha commentato la tua opera "${entry.title}"`,
+                    }).catch((e) => console.error('notif fail:', e));
+                }
+                // Notifica all'autore del commento parent (se reply)
+                if (parentCommentId) {
+                    const parentComment = await this.entryService.getCommentById(parseInt(parentCommentId, 10));
+                    if (parentComment) {
+                        const parentUserId = await this.entryService.db.get(
+                            `SELECT user_id FROM comments WHERE id = ?`,
+                            [parseInt(parentCommentId, 10)]
+                        );
+                        if (parentUserId && parentUserId.user_id !== userId) {
+                            await this.notificationService.create({
+                                userId: parentUserId.user_id,
+                                actorId: userId,
+                                type: 'comment_reply',
+                                entryId: parseInt(id, 10),
+                                commentId,
+                                message: `${req.user.username} ha risposto al tuo commento su "${entry.title}"`,
+                            }).catch((e) => console.error('notif fail:', e));
+                        }
+                    }
+                }
+            }
+
             res.status(201).json({ success: true, message: 'Commento aggiunto con successo.', comment: newComment });
         } catch (error) {
             console.error('Error adding comment:', error);

@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/search">Cerca</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">Info</a>
+                    </li>
                     <% if (typeof user !== 'undefined' && user) { %>
                         <li class="nav-item">
                             <a class="nav-link" href="/feed">Feed</a>
@@ -48,6 +51,31 @@
                 </ul>
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <% if (typeof user !== 'undefined' && user) { %>
+                        <!-- Notifiche bell -->
+                        <li class="nav-item dropdown me-lg-1">
+                            <a class="nav-link position-relative" href="#"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                               id="notifBell" title="Notifiche">
+                                <i class="bi bi-bell<%= unreadNotifications > 0 ? '-fill' : '' %>"></i>
+                                <% if (unreadNotifications > 0) { %>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notif-badge">
+                                        <%= unreadNotifications > 9 ? '9+' : unreadNotifications %>
+                                    </span>
+                                <% } %>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notif-panel" id="notifPanel">
+                                <h6 class="dropdown-header d-flex justify-content-between align-items-center">
+                                    Notifiche
+                                    <button type="button" class="btn btn-link btn-sm text-decoration-none p-0" id="markAllRead">
+                                        Segna tutte lette
+                                    </button>
+                                </h6>
+                                <div id="notifList" class="notif-list">
+                                    <p class="dropdown-item text-muted small">Caricamento...</p>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- User dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-inline-flex align-items-center gap-2"
                                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,4 +127,7 @@
         </div>
     </nav>
     <%- include('alerts') %>
+    <% if (typeof user !== 'undefined' && user) { %>
+        <script type="module" src="/js/notifications.js"></script>
+    <% } %>
 </header>
