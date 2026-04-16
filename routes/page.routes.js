@@ -1,6 +1,7 @@
 // routes/page.routes.js
 import express from 'express';
 import { isAuthenticated, isCreator } from '../middlewares/auth.middleware.js';
+import { uploadSingleAvatar } from '../middlewares/upload.middleware.js';
 
 const router = express.Router();
 
@@ -29,6 +30,9 @@ export default (pageController, entryService) => { // Passa EntryService per ent
     router.get('/profile/:username', pageController.renderProfilePage.bind(pageController));
     // For the currently logged-in user's profile, maybe redirect /profile to /profile/:username
     router.get('/profile', isAuthenticated, (req, res) => res.redirect(`/profile/${req.user.username}`));
+
+    // Batch C — Avatar upload
+    router.post('/profile/avatar', isAuthenticated, uploadSingleAvatar, pageController.uploadAvatar.bind(pageController));
 
     // Creator Upload page (requires Creator role)
     router.get('/upload', isAuthenticated, isCreator, pageController.renderUploadEntryPage.bind(pageController));

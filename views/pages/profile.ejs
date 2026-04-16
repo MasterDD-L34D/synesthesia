@@ -19,11 +19,25 @@
         <section class="row g-4 mb-5">
             <div class="col-lg-4">
                 <article class="card shadow-sm p-3 text-center">
-                    <img
-                        src="/img/default-avatar.png"
-                        class="profile-avatar rounded-circle mx-auto mb-3"
-                        alt="Avatar di <%= profileUser.username %>"
-                    >
+                    <div class="position-relative d-inline-block mx-auto mb-3">
+                        <img
+                            src="<%= profileUser.avatar_path || '/img/default-avatar.png' %>"
+                            class="profile-avatar rounded-circle"
+                            alt="Avatar di <%= profileUser.username %>"
+                        >
+                        <% if (isOwner) { %>
+                            <form action="/profile/avatar" method="POST" enctype="multipart/form-data"
+                                  class="avatar-upload-overlay">
+                                <label for="avatarInput" class="avatar-upload-label" title="Cambia avatar">
+                                    <i class="bi bi-camera-fill"></i>
+                                </label>
+                                <input type="file" id="avatarInput" name="avatar"
+                                       accept="image/jpeg,image/png,image/gif,image/webp"
+                                       class="d-none"
+                                       onchange="this.form.submit()">
+                            </form>
+                        <% } %>
+                    </div>
                     <h2 class="h4 mb-2"><%= profileUser.username %></h2>
                     <p class="text-muted small"><%= profileUser.description || 'Nessuna descrizione.' %></p>
 

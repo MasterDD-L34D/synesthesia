@@ -73,5 +73,33 @@ const upload = multer({
     limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-export { upload, mapMediaType };
+// Avatar upload: destinazione fissa public/uploads/avatars/, max 2MB, solo immagini.
+const avatarStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dest = path.join(ROOT, 'public', 'uploads', 'avatars');
+        fs.mkdirSync(dest, { recursive: true });
+        cb(null, dest);
+    },
+    filename: (req, file, cb) => {
+        const ts = Date.now();
+        const rnd = crypto.randomBytes(4).toString('hex');
+        const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+        cb(null, `avatar-${ts}-${rnd}${ext}`);
+    },
+});
+
+function avatarFilter(req, file, cb) {
+    if (!IMAGE_MIME.test(file.mimetype)) {
+        return cb(new Error('Solo immagini (JPG, PNG, GIF, WebP) per l\'avatar.'));
+    }
+    cb(null, true);
+}
+
+const avatarUpload = multer({
+    storage: avatarStorage,
+    fileFilter: avatarFilter,
+    limits: { fileSize: 2 * 1024 * 1024 },
+});
+
+export { upload, avatarUpload, mapMediaType };
 export default upload;

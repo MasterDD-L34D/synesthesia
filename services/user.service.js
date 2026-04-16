@@ -34,7 +34,13 @@ class UserService {
         return this.db.all(`SELECT id, username, email, role, is_creator_unlocked, created_at FROM users ORDER BY username ASC`);
     }
 
-    // Aggiungi qui altri metodi per la gestione utenti (es. update, delete)
+    async updateAvatar(userId, avatarPath) {
+        const result = await this.db.run(
+            `UPDATE users SET avatar_path = ?, updated_at = DATETIME('now') WHERE id = ?`,
+            [avatarPath, userId]
+        );
+        return result.changes > 0;
+    }
 }
 
 export default UserService;

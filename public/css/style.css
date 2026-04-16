@@ -859,6 +859,42 @@ footer .small {
     box-shadow: 0 0 0 3px var(--syn-iris-soft), var(--syn-shadow-md);
 }
 
+/* Avatar upload overlay */
+.avatar-upload-overlay {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+}
+
+.avatar-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--syn-iris);
+    color: var(--syn-bone-elevated);
+    border-radius: var(--syn-radius-full);
+    cursor: pointer;
+    box-shadow: var(--syn-shadow-md);
+    transition: var(--syn-transition);
+    font-size: 1rem;
+}
+
+.avatar-upload-label:hover {
+    background: var(--syn-iris-hover);
+    transform: scale(1.1);
+}
+
+/* Navbar avatar mini */
+.navbar-avatar {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border-radius: var(--syn-radius-full);
+    border: 2px solid var(--syn-iris-soft);
+}
+
 /* =================== Entry detail =================== */
 .entry-detail-image {
     max-height: 600px;

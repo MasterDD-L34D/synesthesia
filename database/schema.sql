@@ -11,6 +11,9 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash TEXT NOT NULL,
     role TEXT DEFAULT 'registered' CHECK (role IN ('guest', 'registered', 'creator', 'admin')),
     is_creator_unlocked INTEGER DEFAULT 0, -- 0 per false, 1 per true
+    bio TEXT,
+    avatar_path TEXT,
+    is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );

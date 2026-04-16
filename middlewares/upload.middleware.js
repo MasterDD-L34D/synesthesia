@@ -3,7 +3,22 @@
 // Wrapper attorno a multer.single('mediaFile') che trasforma gli errori
 // Multer in flash + redirect al form invece di 500.
 
-import { upload } from '../config/multer.js';
+import { upload, avatarUpload } from '../config/multer.js';
+
+// Avatar upload wrapper (max 2MB, image-only)
+export const uploadSingleAvatar = (req, res, next) => {
+    const handler = avatarUpload.single('avatar');
+    handler(req, res, (err) => {
+        if (err) {
+            const msg = err.code === 'LIMIT_FILE_SIZE'
+                ? 'Avatar troppo grande. Limite: 2MB.'
+                : (err.message || 'Errore nel caricamento dell\'avatar.');
+            req.flash('error_msg', msg);
+            return res.redirect(`/profile/${req.user.username}`);
+        }
+        next();
+    });
+};
 
 export const uploadSingleEntry = (req, res, next) => {
     const handler = upload.single('mediaFile');

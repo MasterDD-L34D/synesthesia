@@ -232,6 +232,25 @@ class PageController {
         }
     }
 
+    // Batch C — Avatar upload
+    async uploadAvatar(req, res, next) {
+        try {
+            if (!req.file) {
+                req.flash('error_msg', 'Seleziona un\'immagine per l\'avatar.');
+                return res.redirect(`/profile/${req.user.username}`);
+            }
+            const publicPath =
+                '/uploads/avatars/' + req.file.filename;
+            await this.userService.updateAvatar(req.user.id, publicPath);
+            req.flash('success_msg', 'Avatar aggiornato!');
+            res.redirect(`/profile/${req.user.username}`);
+        } catch (error) {
+            console.error('Error uploading avatar:', error);
+            req.flash('error_msg', 'Errore durante l\'upload dell\'avatar.');
+            res.redirect(`/profile/${req.user.username}`);
+        }
+    }
+
     renderSearchPage(req, res) {
         res.render('pages/search', { title: 'Ricerca Avanzata', user: req.user });
     }
